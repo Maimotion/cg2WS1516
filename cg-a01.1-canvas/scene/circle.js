@@ -31,7 +31,7 @@ define(["util", "vec2", "Scene", "PointDragger"],
         var Circle = function(point0, radius, lineStyle) {
 
             console.log("creating Circle with center at [" +
-            point0[0] + "," + point0[1] + "] and [" +
+            point0[0] + "," + point0[1] + "] and a radius of [" +
             radius + "].");
 
             // draw style for drawing the line
@@ -72,7 +72,7 @@ define(["util", "vec2", "Scene", "PointDragger"],
                 }
             };
 
-            // return list of draggers to manipulate this line
+            // return list of draggers to manipulate this circle
             this.createDraggers = function() {
 
                 var draggerStyle = { radius:4, color: this.lineStyle.color, width:0, fill:true }
