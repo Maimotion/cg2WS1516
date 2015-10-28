@@ -10,6 +10,7 @@
  *
  */
 
+//Author: Maimotion
 
 /* requireJS module definition */
 define(["jquery", "Line", "Circle", "Point"],
@@ -51,7 +52,7 @@ define(["jquery", "Line", "Circle", "Point"],
                 return "#"+toHex2(r)+toHex2(g)+toHex2(b);
             };
 
-            /*
+            /*===============================================================
              * event handler for "new line button".
              */
             $("#btnNewLine").click( (function() {
@@ -72,7 +73,7 @@ define(["jquery", "Line", "Circle", "Point"],
                 sceneController.select(line); // this will also redraw
             }));
 
-            /*
+            /*======================================================================
              * event handler for "new CIRCLE button".
              */
             $("#btnNewCircle").click( (function() {
@@ -95,7 +96,7 @@ define(["jquery", "Line", "Circle", "Point"],
 
             }));
 
-            /*
+            /*===========================================================================
              * event handler for "new POINT button".
              */
             $("#btnNewPoint").click( (function() {
@@ -119,9 +120,16 @@ define(["jquery", "Line", "Circle", "Point"],
             
             /*==============================================================
             * on selection of an object --> refresh input-fields
+            * if object is no circle, then the radius is hidden with
+            * .hide, as requested
             */ 
             sceneController.onSelection( (function() {
                 var obj = sceneController.getSelectedObject();
+                if(obj instanceof Circle){ 
+                    $("#radHide").show();           
+                }else{
+                    $("#radHide").hide();
+                }
                 $("#colorPick").val(obj.lineStyle.color);  
                 $("#widthPick").val(obj.lineStyle.width);
                 $("#radPick").val(obj.radius);
@@ -148,12 +156,6 @@ define(["jquery", "Line", "Circle", "Point"],
                 obj.radius = newRad;
                 scene.draw(context);
             }));
-            
-
-
-
-
-
         };
 
         // return the constructor function
