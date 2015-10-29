@@ -22,23 +22,19 @@ requirejs.config({
 
         // gl-matrix library
         "gl-matrix": "../lib/gl-matrix-1.3.7",
-        "util"     : "./utils/util",
-        
-        "Scene"         : "./scene/scene",
-        "Line"          : "./scene/line",
-        "PointDragger"  : "./scene/point_dragger",
-        "Circle"        : "./scene/circle",
-        "Point"         : "./scene/point",
 
-        "vec2"          : "./math/vec2",
+        "util" : "./utils/util",
 
-        "SceneController"   : "./controller/scene_controller",
-        "HtmlController"    : "./controller/html_controller",
+        "Scene" : "./scene/scene",
+        "Line" : "./scene/line",
+        "PointDragger" : "./scene/point_dragger",
+        "Circle" : "./scene/circle",
+        "Point" : "./scene/point",
 
-        "kdutil"        : "./kdutil",
-        "BoundingBox"   : "./boundingbox",
-        "KdNode"        : "./kdnode",
-        "KdTree"        : "./kdtree"
+        "vec2" : "./math/vec2",
+
+        "SceneController" : "./controller/scene_controller",
+        "HtmlController" : "./controller/html_controller"
     }
 });
 

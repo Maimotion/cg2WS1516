@@ -13,8 +13,8 @@
 //Author: Maimotion
 
 /* requireJS module definition */
-define(["jquery", "Line", "Circle", "Point"],
-    (function($, Line, Circle, Point) {
+define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
+    (function($, Line, Circle, Point, KdTree, Util, KdUtil) {
         "use strict";
 
         /*
@@ -51,6 +51,9 @@ define(["jquery", "Line", "Circle", "Point"],
                 // convert to hex notation
                 return "#"+toHex2(r)+toHex2(g)+toHex2(b);
             };
+            //=====================================EX1.2
+            var kdTree;
+            var pointList = [];
 
             /*===============================================================
              * event handler for "new line button".
@@ -116,6 +119,77 @@ define(["jquery", "Line", "Circle", "Point"],
                 sceneController.select(point); // this will also redraw
 
             }));
+            /*=========================================================Ex1.2
+            */////////////////////////////////////////////////////////
+           
+            $("#btnNewPointList").click( (function() {
+
+                // create the actual line and add it to the scene
+                var style = {
+                    width: Math.floor(Math.random()*3)+1,
+                    color: randomColor()
+                };
+
+                var numPoints = parseInt($("#numPoints").attr("value"));;
+                for(var i=0; i<numPoints; ++i) {
+                    var point = new Point([randomX(), randomY()], 5,
+                        style);
+                    scene.addObjects([point]);
+                    pointList.push(point);
+                }
+
+                // deselect all objects, then select the newly created object
+                sceneController.deselect();
+
+            }));
+
+            $("#visKdTree").click( (function() {
+
+                var showTree = $("#visKdTree").attr("checked");
+                if(showTree && kdTree) {
+                    KdUtil.visualizeKdTree(sceneController, scene, kdTree.root, 0, 0, 600, true);
+                }
+
+            }));
+
+            $("#btnBuildKdTree").click( (function() {
+
+                kdTree = new KdTree(pointList);
+
+            }));
+
+            /**
+             * creates a random query point and
+             * runs linear search and kd-nearest-neighbor search
+             */
+            $("#btnQueryKdTree").click( (function() {
+
+                var style = {
+                    width: 2,
+                    color: "#ff0000"
+                };
+                var queryPoint = new Point([randomX(), randomY()], 2,
+                    style);
+                scene.addObjects([queryPoint]);
+                sceneController.select(queryPoint); 
+
+                console.log("query point: ", queryPoint.center);
+
+                ////////////////////////////////////////////////
+                // TODO: measure and compare timings of linear
+                //       and kd-nearest-neighbor search
+                ////////////////////////////////////////////////
+                var linearTiming;
+                var kdTiming;
+                var minIdx = KdUtil.linearSearch(pointList, queryPoint);
+                console.log("nearest neighbor linear: ", pointList[minIdx].center);
+                var kdNearestNeighbor = kdTree.findNearestNeighbor(kdTree.root, queryPoint, 10000000, kdTree.root, 0);
+                console.log("nearest neighbor kd: ", kdNearestNeighbor.point.center);
+
+                sceneController.select(pointList[minIdx]);
+                sceneController.select(kdNearestNeighbor.point);
+
+            }));
 
             
             /*==============================================================
@@ -136,7 +210,7 @@ define(["jquery", "Line", "Circle", "Point"],
             }));
             
             /*========================================================
-            * on entry refresh object
+            * on input-entry refresh object
             */
             $("#colorPick").change((function() {
                 var obj = sceneController.getSelectedObject();
