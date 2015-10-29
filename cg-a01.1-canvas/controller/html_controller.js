@@ -121,9 +121,9 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
             }));
             /*=========================================================Ex1.2
             */////////////////////////////////////////////////////////
-           
+           // creates new point list 
             $("#btnNewPointList").click( (function() {
-
+ 
                 // create the actual line and add it to the scene
                 var style = {
                     width: Math.floor(Math.random()*3)+1,
@@ -227,7 +227,7 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
             $("#radPick").change((function() {
                 var obj = sceneController.getSelectedObject();
                 var newRad = $("#radPick").val();
-                obj.radius = newRad;
+                obj.radius = parseInt(newRad);
                 scene.draw(context);
             }));
         };

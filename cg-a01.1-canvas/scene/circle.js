@@ -90,6 +90,7 @@ define(["util", "vec2", "Scene", "PointDragger"],
                     _circle.p1 = dragEvent.position; 
                     //new radius = length of new p1-p0
                     _circle.radius = vec2.length(vec2.sub(_circle.p1, _circle.p0));
+                    $("#radPick").val(_circle.radius);                //refreshs input-field :) 
                 };
                 draggers.push( new PointDragger(getP0, setP0, draggerStyle) );
                 draggers.push( new PointDragger(getP1, setP1, draggerStyle) );
